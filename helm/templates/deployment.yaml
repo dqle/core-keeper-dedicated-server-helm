@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-keeper
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: core-keeper
+  template:
+    metadata:
+      labels:
+        app: core-keeper
+    spec:
+      containers:
+        - name: core-keeper
+          image: "{{ .Values.image.repository }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: WORLD_INDEX
+              value: "{{ .Values.env.WORLD_INDEX }}"
+            - name: WORLD_NAME
+              value: "{{ .Values.env.WORLD_NAME }}"
+            - name: WORLD_SEED
+              value: "{{ .Values.env.WORLD_SEED }}"
+            - name: WORLD_MODE
+              value: "{{ .Values.env.WORLD_MODE }}"
+            - name: GAME_ID
+              value: "{{ .Values.env.GAME_ID }}"
+            - name: DATA_PATH
+              value: "{{ .Values.env.DATA_PATH }}"
+            - name: MAX_PLAYERS
+              value: "{{ .Values.env.MAX_PLAYERS }}"
+            - name: DISCORD
+              value: "{{ .Values.env.DISCORD }}"
+            - name: DISCORD_HOOK
+              value: "{{ .Values.env.DISCORD_HOOK }}"
+            - name: SEASON
+              value: "{{ .Values.env.SEASON }}"
+            - name: SERVER_IP
+              value: "{{ .Values.env.SERVER_IP }}"
+            - name: SERVER_PORT
+              value: "{{ .Values.env.SERVER_PORT }}"
+          volumeMounts:
+            - mountPath: /home/steam/core-keeper-dedicated
+              name: server-files
+            - mountPath: /home/steam/core-keeper-data
+              name: server-data
+      volumes:
+        - name: server-files
+          persistentVolumeClaim:
+            claimName: core-keeper-server-files-pvc
+        - name: server-data
+          persistentVolumeClaim:
+            claimName: core-keeper-server-data-pvc

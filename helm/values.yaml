@@ -1,0 +1,29 @@
+image:
+  repository: escaping/core-keeper-dedicated
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+env:
+  WORLD_INDEX: "0"
+  WORLD_NAME: "Core Keeper Server"
+  WORLD_SEED: "0"
+  WORLD_MODE: "0"
+  GAME_ID: ""
+  DATA_PATH: "/home/steam/core-keeper-data"
+  MAX_PLAYERS: "10"
+  DISCORD: "0"
+  DISCORD_HOOK: "https://discord.com/api/webhooks/{id}/{token}"
+  SEASON: "-1"
+  SERVER_IP: ""
+  SERVER_PORT: ""
+
+persistence:
+  enabled: true
+  serverFilesSize: 5Gi
+  serverDataSize: 5Gi
+  accessMode: ReadWriteOnce
+
+service:
+  type: ClusterIP
+  port: 8080

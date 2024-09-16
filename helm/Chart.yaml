@@ -1,0 +1,7 @@
+apiVersion: v2
+name: core-keeper-dedicated-server
+description: A Helm chart for deploying Core Keeper dedicated server
+version: 1.0.0
+appVersion: "1.0"
+maintainers:
+- name: Duc Le
